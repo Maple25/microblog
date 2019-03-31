@@ -32,4 +32,20 @@ public class GetUserDetails {
             return userId;
         }else return 0;
     }
+
+    public static int checkUserNameExist(String userName) throws Exception {
+        Connection con=dbUtil.getCon();
+        String sql="SELECT * FROM user WHERE user_name=?";
+        PreparedStatement pstmt=con.prepareStatement(sql);
+        pstmt.setString(1,userName);
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            String userNameHaved=rs.getString("user_name");
+            System.out.println("该用户名已存在");
+            return 0;
+        }else {
+            System.out.println("不存在该用户名，可使用");
+            return 1;
+        }
+    }
 }

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 import static com.maple.www.dao.AddUser.addUser;
+import static com.maple.www.dao.GetUserDetails.checkUserNameExist;
 
 public class Register {
 
@@ -35,6 +36,10 @@ public class Register {
         }
         System.out.println("请输入用户名");
         String userName=sc.nextLine();
+        while(checkUserNameExist(userName) == 0){
+            System.out.println("请重新输入用户名");
+            userName=sc.nextLine();
+        }
         System.out.println("请输入密码");
         String password=sc.nextLine();
         System.out.println("请确认密码");

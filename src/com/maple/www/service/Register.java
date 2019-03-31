@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 
 import static com.maple.www.dao.AddUser.addUser;
+import static com.maple.www.dao.CheckFormat.checkEmailFormat;
+import static com.maple.www.dao.CheckFormat.checkTelFormat;
 import static com.maple.www.dao.GetUserDetails.checkUserNameExist;
 
 public class Register {
@@ -55,13 +57,16 @@ public class Register {
         }
         System.out.println("请输入手机号码");
         String tel=sc.nextLine();
-        while(tel.length()!=11){
+        while(!checkTelFormat(tel)){
             System.out.println("您输入的手机号码格式错误,请重新输入");
             tel=sc.nextLine();
         }
         System.out.println("请输入邮箱");
-        String email=null;
-        email=sc.nextLine();//待后期解决如何判断email的格式验证以及在user里面增加email字段，以及实现利用email或者tel以及用户名登录
+        String email=sc.nextLine();//以及实现利用email或者tel以及用户名登录
+        while(!checkEmailFormat(email)){
+            System.out.println("您输入的邮箱地址格式错误,请重新输入");
+            email=sc.nextLine();
+        }
         User user=new User(userName,password,tel,email,0,"v1",power);
         addUser(user);
 

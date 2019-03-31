@@ -23,9 +23,9 @@ public class AddUser {
         pstmt.setBoolean(7,user.isPower());
         int result=pstmt.executeUpdate();
         if(result==1) {
-            System.out.println("addUser SUCESSFUL!");
+            System.out.println("注册成功!");
         }else {
-            System.out.println("addUser FAILED!");
+            System.out.println("注册失败!");
         }
         dbUtil.close(pstmt,con);
     }

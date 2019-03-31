@@ -12,14 +12,15 @@ public class AddUser {
 
     public static void addUser(User user) throws Exception {
         Connection con=dbUtil.getCon();
-        String sql="INSERT INTO user VALUES(null,?,?,?,?,?,?)";//写一个获得sql的方法，根据输入的类型生成对应的sql语句
+        String sql="INSERT INTO user VALUES(null,?,?,?,?,?,?,?)";//写一个获得sql的方法，根据输入的类型生成对应的sql语句
         PreparedStatement pstmt=con.prepareStatement(sql);
         pstmt.setString(1,user.getUserName());
         pstmt.setString(2,user.getPassword());
         pstmt.setString(3,user.getTel());
-        pstmt.setInt(4,user.getExp());
-        pstmt.setString(5,user.getLevel());
-        pstmt.setBoolean(6,user.isPower());
+        pstmt.setString(4,user.getEmail());
+        pstmt.setInt(5,user.getExp());
+        pstmt.setString(6,user.getLevel());
+        pstmt.setBoolean(7,user.isPower());
         int result=pstmt.executeUpdate();
         if(result==1) {
             System.out.println("addUser SUCESSFUL!");

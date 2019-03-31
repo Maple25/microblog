@@ -4,7 +4,9 @@ import com.maple.www.Util.DbUtil;
 import com.maple.www.model.User;
 
 import java.sql.Connection;
+import java.sql.SQLOutput;
 import java.util.Scanner;
+
 
 import static com.maple.www.dao.AddUser.addUser;
 import static com.maple.www.dao.GetUserDetails.checkUserNameExist;
@@ -51,9 +53,17 @@ public class Register {
             System.out.println("请确认密码");
             password_confirm=sc.nextLine();
         }
-        System.out.println("请输入手机号码或邮箱");
+        System.out.println("请输入手机号码");
         String tel=sc.nextLine();
-        User user=new User(userName,password,tel,0,"v1",power);
+        while(tel.length()!=11){
+            System.out.println("您输入的手机号码格式错误,请重新输入");
+            tel=sc.nextLine();
+        }
+        System.out.println("请输入邮箱");
+        String email=null;
+        email=sc.nextLine();//待后期解决如何判断email的格式验证以及在user里面增加email字段，以及实现利用email或者tel以及用户名登录
+        User user=new User(userName,password,tel,email,0,"v1",power);
         addUser(user);
+
     }
 }

@@ -6,6 +6,7 @@ public class User{
     private String userName;
     private String password;
     private String tel;
+    private String email;
     private int exp;
     private String level;
     private boolean power;
@@ -58,6 +59,14 @@ public class User{
         this.tel = tel;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getLevel() {
         return level;
     }
@@ -83,6 +92,16 @@ public class User{
         this.userName = userName;
         this.password = password;
         this.tel = tel;
+        this.exp = exp;
+        this.level = level;
+        this.power = power;
+    }
+
+    public User(String userName, String password, String tel, String email, int exp, String level, boolean power) {
+        this.userName = userName;
+        this.password = password;
+        this.tel = tel;
+        this.email = email;
         this.exp = exp;
         this.level = level;
         this.power = power;

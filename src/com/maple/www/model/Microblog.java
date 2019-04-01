@@ -3,6 +3,7 @@ package com.maple.www.model;
 enum cg{科技,生活,技术};//微博类别待做 可以写一个方法来输入 就像create sql
 public class Microblog {
     private int senderId;
+    private String senderName;
     private String mbCategory;
     private String mbText;
     private int liked;
@@ -14,6 +15,13 @@ public class Microblog {
     }
     public void setSenderId(int senderId) {
         this.senderId = senderId;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getMbCategory() {
@@ -66,15 +74,21 @@ public class Microblog {
         this.mbSendTime = mbSendTime;
     }
 
+    public Microblog(int senderId, String senderName, String mbCategory, String mbText, int liked, String mbSendTime) {
+        this.senderId = senderId;
+        this.senderName = senderName;
+        this.mbCategory = mbCategory;
+        this.mbText = mbText;
+        this.liked = liked;
+        this.mbSendTime = mbSendTime;
+    }
+
+    public Microblog() {
+    }//空构造器 与那个空指针有关 枯辽
+
     @Override
     public String toString() {
         return senderId+" "+mbCategory+" "+mbText+" "+mbSendTime;
-    }
-
-    public static void main(String[] args) {
-        User user =new User("maple",0,true);
-        Microblog mb=new Microblog(1,"科技","微博正文","NOW");
-        System.out.println(mb);
     }
 
 }

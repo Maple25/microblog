@@ -82,21 +82,6 @@ public class User{
         this.power = power;
     }
 
-    public User(String userName, int exp, boolean power) {
-        this.userName = userName;
-        this.exp = exp;
-        this.power = power;
-    }
-
-    public User(String userName, String password, String tel, int exp, String level, boolean power) {
-        this.userName = userName;
-        this.password = password;
-        this.tel = tel;
-        this.exp = exp;
-        this.level = level;
-        this.power = power;
-    }
-
     public User(String userName, String password, String tel, String email, int exp, String level, boolean power) {
         this.userName = userName;
         this.password = password;
@@ -107,6 +92,18 @@ public class User{
         this.power = power;
     }
 
-    public static void main(String[] args) {
+    public User(int id, String userName, String tel, String email, int exp, String level, boolean power) {
+        this.id = id;
+        this.userName = userName;
+        this.tel = tel;
+        this.email = email;
+        this.exp = exp;
+        this.level = level;
+        this.power = power;
+    }//登录时用的 没有密码 登陆后默认为当前用户
+
+    @Override
+    public String toString() {
+        return "用户名:"+userName+"\t手机号码:"+tel+"\t邮箱:"+email+"\t微博等级:"+level+"\t用户权限:"+power;
     }
 }

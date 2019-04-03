@@ -32,5 +32,5 @@ public class CheckFormat {
             }
         return isTelOrEmail;
     }//检查登录时输入的是否为手机号码或者时邮箱
-    //他说没有更改可以提交 
+    //他说没有更改可以提交
 }

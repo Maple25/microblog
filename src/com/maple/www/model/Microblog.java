@@ -1,6 +1,6 @@
 package com.maple.www.model;
 
-enum cg{科技,生活,技术};//微博类别待做 可以写一个方法来输入 就像create sql
+//enum cg{科技,生活,技术,美食,体育};//微博类别待做 可以写一个方法来输入 就像create sql
 public class Microblog {
     private int senderId;
     private String senderName;

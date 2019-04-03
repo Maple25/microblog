@@ -1,6 +1,6 @@
 package com.maple.www.model;
 
-enum LEVEL{v1,v2,v3,v4,v5};
+//enum LEVEL{v1,v2,v3,v4,v5};
 public class User{
     private int id;
     private String userName;
@@ -74,6 +74,7 @@ public class User{
     public void setLevel(String level) {
         this.level = level;
     }
+
 
     public User(int id, String userName, int exp, boolean power) {//加入一般不用id 这个函数用在修改的时候
         this.id = id;

@@ -11,6 +11,8 @@ import java.util.Scanner;
 import static com.maple.www.dao.AddUser.addUser;
 import static com.maple.www.dao.CheckFormat.checkEmailFormat;
 import static com.maple.www.dao.CheckFormat.checkTelFormat;
+import static com.maple.www.dao.GetUserDetails.checkEmailExist;
+import static com.maple.www.dao.GetUserDetails.checkTelExist;
 import static com.maple.www.dao.GetUserDetails.checkUserNameExist;
 
 public class Register {
@@ -57,15 +59,30 @@ public class Register {
         }
         System.out.println("请输入手机号码");
         String tel=sc.nextLine();
-        while(!checkTelFormat(tel)){
-            System.out.println("您输入的手机号码格式错误,请重新输入");
-            tel=sc.nextLine();
+        boolean checkTel=false;
+        while(checkTel==false){
+            while(!checkTelFormat(tel)){
+                System.out.println("您输入的手机号码格式错误,请重新输入");
+                tel=sc.nextLine();
+            }
+            if(checkTelExist(tel)){
+                System.out.println("该手机号码已被注册，请重新输入手机号码");
+                tel=sc.nextLine();
+            }else checkTel=true;
         }
+
         System.out.println("请输入邮箱");
         String email=sc.nextLine();//以及实现利用email或者tel以及用户名登录
-        while(!checkEmailFormat(email)){
-            System.out.println("您输入的邮箱地址格式错误,请重新输入");
-            email=sc.nextLine();
+        boolean checkEmail=false;
+        while (checkEmail==false){
+            while(checkEmailFormat(email)==false){
+                System.out.println("您输入的邮箱地址格式错误,请重新输入");
+                email=sc.nextLine();
+            }
+            if (checkEmailExist(email)){
+                System.out.println("该邮箱已被注册，请重新输入邮箱");
+                email=sc.nextLine();
+            }else checkEmail=true;
         }
         User user=new User(userName,password,tel,email,0,"v1",power);
         addUser(user);

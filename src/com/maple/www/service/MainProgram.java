@@ -4,8 +4,11 @@ import com.maple.www.Util.DbUtil;
 import com.maple.www.model.Microblog;
 import com.maple.www.model.User;
 
+import static com.maple.www.service.Homepage.homepage;
 import static com.maple.www.service.Login.login;
+import static com.maple.www.service.OperateMicroblog.searchMicroblog;
 import static com.maple.www.service.OperateMicroblog.sendMicroblog;
+import static com.maple.www.service.OperateUser.inquireUser;
 import static com.maple.www.service.Register.register;
 
 public class MainProgram {
@@ -19,8 +22,11 @@ public class MainProgram {
 //        modifyUserName("MAPLE","TESTMAPLE");
 //        addMicroblog(mb);
 //        addFriend(getUserId(user),1);
-//        register();
-        User user=login();//创建一个user对象来转接login登录的user;
-        sendMicroblog(user);
+//        register();//要增加登陆时未注册的跳转
+//        sendMicroblog(user);
+//        searchMicroblog();
+//        inquireUser();
+        User user=login();//创建一个user对象来转接login登录的user;//login登录方法会返回一个User;
+        homepage(user);
     }
 }

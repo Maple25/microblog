@@ -53,6 +53,12 @@ public class OperateMicroblog {
 
     }
 
+    public static String replaceSpace(String str){
+        StringBuffer strTemp=new StringBuffer(str);
+        String keyword=strTemp.toString().replaceAll(" ","|");
+        return keyword;
+    }//将输入的字符中的空格替换为|，以实现查询时的模糊查询
+
     public static void searchMicroblog() throws Exception {//尝试实现模糊查询 正则表达式   /w+Keyword+/w
         Connection con=dbUtil.getCon();
         Scanner scK=new Scanner(System.in);
@@ -72,7 +78,7 @@ public class OperateMicroblog {
             int liked=rs.getInt("liked");
             String sendTime=rs.getString("mb_send_time");
             String mbId=rs.getString("mb_id");
-            System.out.println("-------------------------------------------------------------------------------------");
+            System.out.println("**************************************************************************************");
             System.out.println("用户 "+senderName+":#"+category+"#"+context+"\n赞："+liked+"\t\t"+sendTime);
             Connection con2=dbUtil.getCon();
             sql="SELECT*FROM comment WHERE comment_on_mb_id="+mbId;
@@ -113,9 +119,8 @@ public class OperateMicroblog {
             System.out.println("--------------------------------------------------------------------------------------");
             System.out.println("微博ID："+mbId);
             System.out.println("用户 "+senderName+":#"+category+"#"+context+"\n赞："+liked+"\t\t"+sendTime);
-            Connection con2=dbUtil.getCon();
             sql="SELECT*FROM comment WHERE comment_on_mb_id="+mbId;
-            Statement stmt2=con2.createStatement();
+            Statement stmt2=con.createStatement();
             ResultSet rs2=stmt2.executeQuery(sql);
             while (rs2.next()){
                 String comment=rs2.getString("comment");
@@ -130,11 +135,7 @@ public class OperateMicroblog {
         索引！索引弄清楚！
          */
     }
-    public static String replaceSpace(String str){
-        StringBuffer strTemp=new StringBuffer(str);
-        String keyword=strTemp.toString().replaceAll(" ","|");
-        return keyword;
-    }//将输入的字符中的空格替换为|，以实现查询时的模糊查询
+
 
     public static boolean checkMbIdBelong(User user,int mbId) throws Exception {
         Connection con=dbUtil.getCon();
@@ -148,7 +149,6 @@ public class OperateMicroblog {
             return false;
         }
     }
-
     public static void deleteMicroblogByUser(User user) throws Exception {
         /*
         首先先判断这个人是否为管理员
@@ -202,45 +202,35 @@ public class OperateMicroblog {
 //        String sql="DELETE * FROM microblog WHERE mb_id="+mbId;
     }//这个有点难度 如何实现选择哪一条微博
 
-    public static void searchMicroblogWithComment() throws Exception {//尝试实现模糊查询 正则表达式   /w+Keyword+/w
+    /*
+    用于个人中心展示微博
+     */
+    public static void showMicroblog(User user) throws Exception {
         Connection con=dbUtil.getCon();
-        Scanner scK=new Scanner(System.in);
-        System.out.println("请输入关键词:");
-        String keyword= scK.nextLine();
-        /*
-        把Keyword里面的空格换成|
-         */
-        keyword=replaceSpace(keyword);
-        String sql="SELECT * FROM microblog WHERE mb_text REGEXP '"+keyword+"'";
+        String sql="SELECT * FROM microblog WHERE sender_id="+user.getId();
         Statement stmt=con.createStatement();
         ResultSet rs=stmt.executeQuery(sql);
         while(rs.next()){
-            String senderName=rs.getString("sender_name");
             String category=rs.getString("mb_category");
             String context=rs.getString("mb_text");
-            int liked=rs.getInt("liked");
             String sendTime=rs.getString("mb_send_time");
+            int liked=rs.getInt("liked");
             int mbId=rs.getInt("mb_id");
-            System.out.println("-------------------------------------------------------------------------------------");
-            System.out.println("微博ID："+mbId);
-            System.out.println("用户 "+senderName+":#"+category+"#"+context+"\n赞："+liked+"\t\t"+sendTime);
-            Connection con2=dbUtil.getCon();
+            System.out.println("***************************************************");
+            System.out.println("#"+category+"#"+context+"\t赞："+liked+"\t评论时间："+sendTime);
             sql="SELECT*FROM comment WHERE comment_on_mb_id="+mbId;
-            Statement stmt2=con2.createStatement();
+            Statement stmt2=con.createStatement();
             ResultSet rs2=stmt2.executeQuery(sql);
             while (rs2.next()){
+                System.out.println("---------------------------------------------------");
                 String comment=rs2.getString("comment");
-                String commentator=rs2.getString("commentator");
                 String commentTime=rs2.getString("comment_time");
-                System.out.println("#评论#"+comment+"\t评论人:"+commentator+"\t评论时间："+commentTime);
+                String commentator=rs2.getString("commentator");
+                System.out.println("#评论#"+comment+"\t评论人: "+commentator+"\t评论时间："+commentTime);
             }
         }
-        System.out.println("-------------------------------------------------------------------------------------");
 
-        /*
-        索引！索引弄清楚！
-         */
-    }//在searchMicroblogwWithId基础上测试加入打印评论的功能 没实际运用
+    }
 
     public static void main(String[] args) throws Exception {
 //        User user=new User("TESTMAPLE","123456789","13556412863","zoew1942spe@live.com",0,"v1",true);

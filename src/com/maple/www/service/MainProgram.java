@@ -4,6 +4,8 @@ import com.maple.www.Util.DbUtil;
 import com.maple.www.model.Microblog;
 import com.maple.www.model.User;
 
+import java.util.Scanner;
+
 import static com.maple.www.service.Homepage.homepage;
 import static com.maple.www.service.Login.login;
 import static com.maple.www.service.OperateMicroblog.searchMicroblog;

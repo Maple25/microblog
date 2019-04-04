@@ -1,9 +1,6 @@
 package com.maple.www.Util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DbUtil {
     //数据库地址
@@ -50,6 +47,11 @@ public class DbUtil {
             pstmt.close();
         }
         System.out.println("数据库连接已关闭");
+    }
+    public void close(Connection con) throws SQLException {
+        if (con!=null){
+            con.close();
+        }
     }
 
 }

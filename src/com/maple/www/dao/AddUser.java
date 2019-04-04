@@ -12,7 +12,7 @@ public class AddUser {
 
     public static void addUser(User user) throws Exception {
         Connection con=dbUtil.getCon();
-        String sql="INSERT INTO user VALUES(null,?,?,?,?,?,?,?)";//写一个获得sql的方法，根据输入的类型生成对应的sql语句
+        String sql="INSERT INTO user VALUES(null,?,ENCODE(?,'maple'),?,?,?,?,?,null,null,null,null,null)";//写一个获得sql的方法，根据输入的类型生成对应的sql语句  //使用加密方法将密码存储进数据库
         PreparedStatement pstmt=con.prepareStatement(sql);
         pstmt.setString(1,user.getUserName());
         pstmt.setString(2,user.getPassword());
@@ -28,5 +28,10 @@ public class AddUser {
             System.out.println("注册失败!");
         }
         dbUtil.close(pstmt,con);
+    }
+
+    public static void main(String[] args) throws Exception {
+        User user=new User("testadduser","123456abc","13556412831","zoew1942spe1@live.com",0,"v1",false);
+        addUser(user);
     }
 }

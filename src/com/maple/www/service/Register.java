@@ -86,6 +86,10 @@ public class Register {
         }
         User user=new User(userName,password,tel,email,0,"v1",power);
         addUser(user);
-
     }
+
+    public static void main(String[] args) throws Exception {
+        register();
+    }
+
 }

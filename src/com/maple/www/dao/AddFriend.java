@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 public class AddFriend {
 
     private static DbUtil dbUtil=new DbUtil();
-    public static void addFriend(int userId,int friendId) throws Exception {//之所以只操作friend的ID,是因为用户ID用操作时用户的ID 试试能不能
+    public static void addFriendInMysql(int userId,int friendId) throws Exception {//之所以只操作friend的ID,是因为用户ID用操作时用户的ID 试试能不能
         Connection con=dbUtil.getCon();
         String sql_1="INSERT INTO friend_ship VALUES(null,?,?)";
         String sql_2="INSERT INTO friend_ship VALUES(null,?,?)";

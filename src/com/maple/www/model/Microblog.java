@@ -88,7 +88,7 @@ public class Microblog {
 
     @Override
     public String toString() {
-        return senderId+" "+mbCategory+" "+mbText+" "+mbSendTime;
+        return senderId+" #"+mbCategory+"# "+mbText+" "+mbSendTime;
     }
 
 }

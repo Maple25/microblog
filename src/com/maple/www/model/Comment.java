@@ -41,4 +41,15 @@ public class Comment {
         this.commentOnMbId = commentOnMbId;
         this.commentTime = commentTime;
     }
+
+    public Comment(String comment, String commentator, String commentTime) {//查询评论时用
+        this.comment = comment;
+        this.commentator = commentator;
+        this.commentTime = commentTime;
+    }
+
+    @Override
+    public String toString() {
+        return "--"+comment+" "+commentator+" "+commentTime;
+    }
 }

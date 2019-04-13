@@ -20,7 +20,7 @@ public class OperateMicroblog {
     public static void sendMicroblog(User user) throws Exception {
         Microblog mb=new Microblog();//构造一个空构造器就不会报错空指针了 枯辽
         Scanner sc=new Scanner(System.in);
-        System.out.println("请选择微博类型");
+        System.out.println("请选择微博类型:\n1.科技\n2.技术\n3.美食\n4.生活\n5.体育");
         int choice=sc.nextInt();
         sc.nextLine();
         switch (choice){
@@ -28,7 +28,7 @@ public class OperateMicroblog {
                 mb.setMbCategory("科技");
                 break;
             case 2:
-                mb.setMbCategory("科技");
+                mb.setMbCategory("技术");
                 break;
             case 3:
                 mb.setMbCategory("美食");
@@ -216,7 +216,7 @@ public class OperateMicroblog {
             String sendTime=rs.getString("mb_send_time");
             int liked=rs.getInt("liked");
             int mbId=rs.getInt("mb_id");
-            System.out.println("***************************************************");
+            System.out.println("**************************************************************************************");
             System.out.println("#"+category+"#"+context+"\t赞："+liked+"\t评论时间："+sendTime);
             sql="SELECT*FROM comment WHERE comment_on_mb_id="+mbId;
             Statement stmt2=con.createStatement();
@@ -230,7 +230,7 @@ public class OperateMicroblog {
             }
         }
 
-    }
+    }//会展示所有微博
 
     public static void main(String[] args) throws Exception {
 //        User user=new User("TESTMAPLE","123456789","13556412863","zoew1942spe@live.com",0,"v1",true);

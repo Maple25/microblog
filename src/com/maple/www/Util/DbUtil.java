@@ -25,7 +25,7 @@ public class DbUtil {
                 con.close();
             }
         }
-        System.out.println("数据库连接已关闭");
+//        System.out.println("数据库连接已关闭");
     }
     public void close(PreparedStatement pstmt, Connection con)throws Exception{
         if(pstmt!=null) {
@@ -34,19 +34,19 @@ public class DbUtil {
                 con.close();
             }
         }
-        System.out.println("数据库连接已关闭");
+//        System.out.println("数据库连接已关闭");
     }
     public void close(Statement stmt)throws Exception{
         if(stmt!=null) {
             stmt.close();
         }
-        System.out.println("数据库连接已关闭");
+//        System.out.println("数据库连接已关闭");
     }
     public void close(PreparedStatement pstmt)throws Exception{
         if(pstmt!=null) {
             pstmt.close();
         }
-        System.out.println("数据库连接已关闭");
+//        System.out.println("数据库连接已关闭");
     }
     public void close(Connection con) throws SQLException {
         if (con!=null){

@@ -1,6 +1,8 @@
 package com.maple.www.service;
 
 import com.maple.www.Util.DbUtil;
+import com.maple.www.model.Comment;
+import com.maple.www.model.Microblog;
 import com.maple.www.model.User;
 
 import java.sql.Connection;
@@ -10,12 +12,15 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 import static com.maple.www.dao.AddFriend.addFriendInMysql;
+import static com.maple.www.dao.AddFriend.checkFriendShipExist;
 import static com.maple.www.dao.CheckFormat.checkTelFormat;
 import static com.maple.www.dao.GetUserDetails.checkTelExist;
 import static com.maple.www.dao.GetUserDetails.getUserData;
+import static com.maple.www.dao.GetUserDetails.getUserId;
 
 public class OperateUser {
     private static DbUtil dbUtil=new DbUtil();
+    private static final int N=5,M=10;
 
     public static void inquireUser() throws Exception {
         Scanner sc=new Scanner(System.in);
@@ -47,26 +52,62 @@ public class OperateUser {
             if (!sex.equals("未填写"))System.out.println("性  别:"+sex);
             if (null!=address)System.out.println("地  址:"+address);
 
-            sql="SELECT * FROM microblog WHERE sender_id="+id;
+            sql="SELECT * FROM microblog WHERE sender_id="+id+" ORDER BY mb_send_time DESC";
             Statement stmt3=con.createStatement();
             ResultSet rs3=stmt3.executeQuery(sql);
-            while(rs3.next()){
+            Microblog[] mb=new Microblog[N];//只显示最新的五条数据
+            Comment[][] cm=new Comment[N][M];//暂时显示十条评论
+            int i;int j;
+            for (i=0;i<N&&rs3.next();i++){
                 String category=rs3.getString("mb_category");
                 String context=rs3.getString("mb_text");
                 String sendTime=rs3.getString("mb_send_time");
                 int mbId=rs3.getInt("mb_id");
                 int liked=rs3.getInt("liked");
-                System.out.println("***************************************************");
-                System.out.println("#"+category+"#"+context+"\t赞："+liked+"\t评论时间："+sendTime);
+//                System.out.println("************************************************************************************");
+//                System.out.println("************************************************************************************");
+//                System.out.println("#"+category+"#"+context+"\t赞："+liked+"\t评论时间："+sendTime);
+                mb[i]=new Microblog(mbId,userName,category,context,liked,sendTime);
                 sql="SELECT*FROM comment WHERE comment_on_mb_id="+mbId;
                 Statement stmt4=con.createStatement();
                 ResultSet rs4=stmt4.executeQuery(sql);
-                while (rs4.next()){
-                    System.out.println("---------------------------------------------------");
+                for (j=0;j<M&&rs4.next();j++){
                     String commentTime=rs4.getString("comment_time");
                     String comment=rs4.getString("comment");
                     String commentator=rs4.getString("commentator");
-                    System.out.println("#评论#"+comment+"\t评论人: "+commentator+"\t评论时间："+commentTime);
+//                    System.out.println("---------------------------------------------------");
+//                    System.out.println("#评论#"+comment+"\t评论人: "+commentator+"\t评论时间："+commentTime);
+                    cm[i][j]=new Comment(comment,commentator,commentTime);
+                }
+            }
+            System.out.println("************************************************************************************");
+            System.out.println(mb[0]);
+            for(j=0;j<M;j++){
+                if (null!=cm[0][j]){
+                    System.out.println("---------------------------------------------------");
+                    System.out.println(cm[0][j]);
+                }
+            }
+            System.out.println("是否查看下一页（Y/N）");
+            String choice;
+            i=0;
+            choice=sc.nextLine();
+            while (choice.equals("Y")){
+                i++;
+                System.out.println("************************************************************************************");
+                System.out.println(mb[i]);
+                for(j=0;j<M;j++){
+                    if (null!=cm[i][j]){
+                        System.out.println("---------------------------------------------------");
+                        System.out.println(cm[i][j]);
+                    }
+                }
+                if (i<N-1){
+                    System.out.println("是否查看下一页（Y/N）");
+                    choice=sc.nextLine();
+                }else{
+                    System.out.println("最多能查看该用户最新5条微博");
+                    choice="N";
                 }
             }
 
@@ -134,7 +175,12 @@ public class OperateUser {
         System.out.println("请输入要添加的用户名：");
         String friendName=sc.nextLine();
         User friend=getUserData(friendName);
-        addFriendInMysql(user.getId(),friend.getId());
+        if (checkFriendShipExist(user,friend)){
+            System.out.println("你们已成为好友，不可重复添加");
+        }else{
+            addFriendInMysql(user.getId(),friend.getId());
+        }
+
     }
 
     public static void editUserData(User user) throws Exception {
@@ -238,6 +284,6 @@ public class OperateUser {
 
 
     public static void main(String[] args) throws Exception {
-
+        inquireUser();
     }
 }

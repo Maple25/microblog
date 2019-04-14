@@ -24,7 +24,7 @@ public class AddComment {
         String daytime=s1.format(new Date());
         pstmt.setString(4,daytime);
         int result=pstmt.executeUpdate();
-        sql="UPDATE user SET exp=exp+1 WHERE id"+user.getId();
+        sql="UPDATE user SET exp=exp+1 WHERE id="+user.getId();
         Statement stmt=con.createStatement();
         stmt.execute(sql);
         dbUtil.close(stmt);

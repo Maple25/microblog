@@ -31,6 +31,5 @@ public class ModifyUser {
     }
 
     public static void main(String[] args) throws Exception {
-        modifyUserName("newMaple","NEWMAPLE");
     }
 }

@@ -74,10 +74,10 @@ public class GetUserDetails {//用来获取数据 无法直接对数据库里的
         ResultSet rs=pstmt.executeQuery();
         if(rs.next()){
             String userNameHaved=rs.getString("user_name");
-            System.out.println("该用户名已存在");
+//            System.out.println("该用户名已存在");
             return 0;
         }else {
-            System.out.println("不存在该用户名，可使用");
+//            System.out.println("不存在该用户名，可使用");
             return 1;
         }
     }//注册时检验用户名是否存在
@@ -147,7 +147,7 @@ public class GetUserDetails {//用来获取数据 无法直接对数据库里的
             String birthday=rs.getString("birthday");
             String sex=rs.getString("sex");
             String address=rs.getString("address");
-            User user=new User(id,userName,userName,email,exp,level,power,introduction,birthday,sex,address);
+            User user=new User(id,userName,tel,email,exp,level,power,introduction,birthday,sex,address);
             return user;
         }else return null;
     }

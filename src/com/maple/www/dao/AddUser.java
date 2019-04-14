@@ -12,7 +12,7 @@ public class AddUser {
 
     public static void addUser(User user) throws Exception {
         Connection con=dbUtil.getCon();
-        String sql="INSERT INTO user VALUES(null,?,ENCODE(?,'maple'),?,?,?,?,?,null,null,null,null,null)";//写一个获得sql的方法，根据输入的类型生成对应的sql语句  //使用加密方法将密码存储进数据库
+        String sql="INSERT INTO user VALUES(null,?,ENCODE(?,'maple'),?,?,?,?,?,null,null,null,'未填写',null)";//写一个获得sql的方法，根据输入的类型生成对应的sql语句  //使用加密方法将密码存储进数据库
         PreparedStatement pstmt=con.prepareStatement(sql);
         pstmt.setString(1,user.getUserName());
         pstmt.setString(2,user.getPassword());

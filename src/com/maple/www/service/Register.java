@@ -43,6 +43,7 @@ public class Register {
         System.out.println("请输入用户名");
         String userName=sc.nextLine();
         while(checkUserNameExist(userName) == 0){
+            System.out.println("该用户名已被使用");
             System.out.println("请重新输入用户名");
             userName=sc.nextLine();
         }
@@ -85,6 +86,7 @@ public class Register {
             }else checkEmail=true;
         }
         User user=new User(userName,password,tel,email,0,"v1",power);
+        user.setSex("未填写");
         addUser(user);
     }
 

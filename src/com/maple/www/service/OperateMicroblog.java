@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import static com.maple.www.dao.AddMicroblog.addMicroblog;
 import static com.maple.www.dao.DeleteMicroblog.deleteMicroblog;
+import static com.maple.www.service.OperateComment.publishComment;
 import static com.maple.www.service.OperateUser.inquireUserAllMb;
 
 public class OperateMicroblog {
@@ -59,11 +60,12 @@ public class OperateMicroblog {
         return keyword;
     }//将输入的字符中的空格替换为|，以实现查询时的模糊查询
 
-    public static void searchMicroblog() throws Exception {//尝试实现模糊查询 正则表达式   /w+Keyword+/w
+    public static void searchMicroblog(User user) throws Exception {//尝试实现模糊查询 正则表达式   /w+Keyword+/w
         Connection con=dbUtil.getCon();
         Scanner scK=new Scanner(System.in);
         System.out.println("请输入关键词:");
         String keyword= scK.nextLine();
+        String choice;
         /*
         把Keyword里面的空格换成|
          */
@@ -72,14 +74,16 @@ public class OperateMicroblog {
         Statement stmt=con.createStatement();
         ResultSet rs=stmt.executeQuery(sql);
         while(rs.next()){
+            int senderId=rs.getInt("sender_id");
             String senderName=rs.getString("sender_name");
             String category=rs.getString("mb_category");
             String context=rs.getString("mb_text");
             int liked=rs.getInt("liked");
             String sendTime=rs.getString("mb_send_time");
-            String mbId=rs.getString("mb_id");
+            int mbId=rs.getInt("mb_id");
             System.out.println("**************************************************************************************");
             System.out.println("用户 "+senderName+":#"+category+"#"+context+"\n赞："+liked+"\t\t"+sendTime);
+            Microblog mb=new Microblog(mbId,senderId,senderName,context,liked,sendTime);
             Connection con2=dbUtil.getCon();
             sql="SELECT*FROM comment WHERE comment_on_mb_id="+mbId;
             Statement stmt2=con2.createStatement();
@@ -89,6 +93,12 @@ public class OperateMicroblog {
                 String commentTime=rs2.getString("comment_time");
                 String commentator=rs2.getString("commentator");
                 System.out.println("#评论#"+comment+"\t评论人:"+commentator+"\t评论时间："+commentTime);
+
+            }
+            System.out.println("是否评论此微博(Y/N)");
+            choice= scK.nextLine();
+            if (choice.equals("Y")){
+                publishComment(user,mb);
             }
         }
         System.out.println("-------------------------------------------------------------------------------------");
@@ -195,8 +205,10 @@ public class OperateMicroblog {
             /*
             判断所输入的ID是否属于他自己的微博
              */
-            checkMbIdBelong(user,mbId);//检查此微博是否本用户所发送 决定是否有权限删除
-            deleteMicroblog(mbId);
+            if(checkMbIdBelong(user,mbId)){
+                //检查此微博是否本用户所发送 决定是否有权限删除
+                deleteMicroblog(mbId);
+            }
         }
 
 //        String sql="DELETE * FROM microblog WHERE mb_id="+mbId;

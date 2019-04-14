@@ -1,9 +1,12 @@
 package com.maple.www.dao;
 
 import com.maple.www.Util.DbUtil;
+import com.maple.www.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class AddFriend {
 
@@ -26,6 +29,16 @@ public class AddFriend {
             System.out.println("addFriend FAILED!");
         }
     }
+
+    public static boolean checkFriendShipExist(User user, User friend) throws Exception {
+        Connection con=dbUtil.getCon();
+        String sql="SELECT * FROM friend_ship WHERE user_id="+user.getId()+" AND friend_id="+friend.getId();
+        Statement stmt=con.createStatement();
+        ResultSet rs=stmt.executeQuery(sql);
+        if(rs.next()){
+            return true;
+        } else return false;
+    }//判断该朋友关系是否存在，存在返回true，不存在返回false
     /*
     如果输入的用户名 通过用户名获得ID 再使用addFriend;
      */

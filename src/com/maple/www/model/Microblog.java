@@ -83,6 +83,15 @@ public class Microblog {
         this.mbSendTime = mbSendTime;
     }
 
+    public Microblog(int mbId,int senderId, String senderName, String mbText, int liked, String mbSendTime) {
+        this.senderId = senderId;
+        this.senderName = senderName;
+        this.mbText = mbText;
+        this.liked = liked;
+        this.mbSendTime = mbSendTime;
+        this.mbId = mbId;
+    }
+
     public Microblog() {
     }//空构造器 与那个空指针有关 枯辽
 
